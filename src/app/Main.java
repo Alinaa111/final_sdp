@@ -2,6 +2,8 @@ package app;
 
 import builder.Order;
 import builder.OrderBuilder;
+import decorator.ExtraCheese;
+import decorator.LargeSize;
 import factory.*;
 import observer.*;
 import singleton.OrderManager;
@@ -21,6 +23,10 @@ public class Main {
         Dish starter = dishFactory.createDish("starter", "Caesar Salad", 5.99);
         Dish main = dishFactory.createDish("main", "Grilled Chicken", 12.50);
         Dish dessert = dishFactory.createDish("dessert", "Chocolate Cake", 4.20);
+
+        // Decorate the main dish (Decorator Pattern)
+        main = new ExtraCheese(main); // Adds extra cheese
+        main = new LargeSize(main); // Upgrades to large size
 
         // Building an Order
         OrderBuilder builder = new OrderBuilder();
