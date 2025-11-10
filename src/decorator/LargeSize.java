@@ -1,4 +1,6 @@
-package dish;
+package decorator;
+
+import factory.Dish;
 
 public class LargeSize extends DishDecorator {
     public LargeSize(Dish dish) {
