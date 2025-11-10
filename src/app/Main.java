@@ -1,13 +1,40 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+package app;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+import builder.Order;
+import builder.OrderBuilder;
+import factory.*;
+import observer.*;
+import singleton.OrderManager;
+import strategy.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Creating OrderManager (singleton)
+        OrderManager manager = OrderManager.getInstance();
+
+        // Adding observers
+        manager.addObserver(new KitchenObserver());
+        manager.addObserver(new WaiterObserver());
+
+        // Creating few dishes using Factory
+        DishFactory dishFactory = new DishFactory();
+        Dish starter = dishFactory.createDish("starter", "Caesar Salad", 5.99);
+        Dish main = dishFactory.createDish("main", "Grilled Chicken", 12.50);
+        Dish dessert = dishFactory.createDish("dessert", "Chocolate Cake", 4.20);
+
+        // Building an Order
+        OrderBuilder builder = new OrderBuilder();
+        Order order = builder.setCustomer("Alina").addDish(starter).addDish(main).addDish(dessert).build();
+
+        // Setting payment method (Strategy)
+        order.setPaymentStrategy(new MobilePayment());
+
+        // Adding order to manager (it will notify observers)
+        manager.addOrder(order);
+
+        // Showing order details and paying
+        System.out.println("\n ORDER SUMMARY");
+        System.out.println(order.getDetails());
+        order.pay();
     }
 }

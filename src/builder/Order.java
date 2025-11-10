@@ -30,8 +30,8 @@ public class Order {
 
     public void pay() {
         if (paymentStrategy != null) {
-            calculateTotalPrice();
-            paymentStrategy.pay();
+            double total = calculateTotalPrice();
+            paymentStrategy.pay(total);
         }
         else {
             System.out.println("No payment method selected for customer: " + customer);

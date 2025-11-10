@@ -1,4 +1,6 @@
-package dish;
+package decorator;
+
+import factory.Dish;
 
 public abstract class DishDecorator extends Dish {
     protected Dish decoratedDish;

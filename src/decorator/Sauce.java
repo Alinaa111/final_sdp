@@ -1,4 +1,6 @@
-package dish;
+package decorator;
+
+import factory.Dish;
 
 public class Sauce extends DishDecorator {
     public Sauce(Dish dish) {
